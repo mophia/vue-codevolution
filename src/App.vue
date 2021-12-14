@@ -8,6 +8,27 @@ export default {
       status: 'danger',
       isPromoted: false,
       isSoldout: false,
+      highlightColor: 'orange',
+      headerSize: 50,
+      headerStyleObject: {
+        color: 'orange',
+        'font-size': '40px',
+        padding: '20px',
+      },
+      baseStyleObject: {
+        fontSize: '50px',
+        padding: '10px',
+      },
+      successStyleObject: {
+        color: 'green',
+        backgroundColor: 'lightgreen',
+        border: '1px solid green',
+      },
+      dangerStyleObject: {
+        color: 'darkred',
+        backgroundColor: 'red',
+        border: '1px solid darkred',
+      },
     };
   },
 };
@@ -28,6 +49,11 @@ export default {
   >
     Object conditional movie
   </h2>
+
+  <h2 v-bind:style="headerStyleObject">Inline Style</h2>
+
+  <div v-bind:style="[baseStyleObject, successStyleObject]">Success style</div>
+  <div v-bind:style="[baseStyleObject, dangerStyleObject]">Danger style</div>
 </template>
 
 <style>
