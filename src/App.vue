@@ -3,57 +3,112 @@ export default {
   name: 'App',
   data() {
     return {
-      headingId: 'heading',
-      isDisabled: true,
-      status: 'danger',
-      isPromoted: false,
-      isSoldout: false,
-      highlightColor: 'orange',
-      headerSize: 50,
-      headerStyleObject: {
-        color: 'orange',
-        'font-size': '40px',
-        padding: '20px',
-      },
-      baseStyleObject: {
-        fontSize: '50px',
-        padding: '10px',
-      },
-      successStyleObject: {
-        color: 'green',
-        backgroundColor: 'lightgreen',
-        border: '1px solid green',
-      },
-      dangerStyleObject: {
-        color: 'darkred',
-        backgroundColor: 'red',
-        border: '1px solid darkred',
-      },
+      formValues: {
+        name: '',
+        profileSummary: '',
+        country:'',
+        jobLocation: [],
+        remoteWork: 'no',
+        skillSet: [],
+        yearsOfExperience: ''
+      }
     };
   },
+  methods: {
+    submitForm(){
+      console.log('Form values', this.formValues);
+      alert('已经提交以下信息'+JSON.stringify(this.formValues, null, 2))
+    }
+
+  }
 };
 </script>
 
 <template>
-  <h2 v-bind:id="headingId">Heading</h2>
-  <button v-bind:disabled="isDisabled">bind</button>
-  <h2 class="underline">Underlined text</h2>
-  <h2 class="underline" v-bind:class="status">Status</h2>
-  <h2 v-bind:class="isPromoted && 'promoted'">Promoted movie</h2>
-  <h2 v-bind:class="isSoldout ? 'sold-out' : 'new'">Sold out movie</h2>
-  <h2 v-bind:class="[isPromoted && 'promoted', isSoldout ? 'sold-out' : 'new']">
-    Array conditional movie
-  </h2>
-  <h2
-    v-bind:="{ promoted: isPromoted, new: !isSoldout, 'sold-out': isSoldout }"
-  >
-    Object conditional movie
-  </h2>
+  <div>
+    <pre>
+    {{ JSON.stringify(formValues, null, 2)}}
+    </pre>
+  </div>
 
-  <h2 v-bind:style="headerStyleObject">Inline Style</h2>
+  <form @submit.prevent="submitForm">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" v-model="formValues.name">
+    </div>
 
-  <div v-bind:style="[baseStyleObject, successStyleObject]">Success style</div>
-  <div v-bind:style="[baseStyleObject, dangerStyleObject]">Danger style</div>
+    <br>
+
+    <div>
+      <label for="profile">Profile Summary</label>
+      <textarea id="profile" cols="30" rows="10" v-model="formValues.profileSummary"></textarea>
+    </div>
+
+    <br>
+
+    <div>
+      <label for="country">Country</label>
+      <select id="country" v-model="formValues.country">
+        <option value="">Select a country</option>
+        <option value="india">India</option>
+        <option value="vietnam">Vietnam</option>
+        <option value="singapore">Singapore</option>
+      </select>
+    </div>
+
+    <br>
+
+    <div>
+      <label for="jon-location">job Location</label>
+      <select id="job-location" multiple v-model="formValues.jobLocation">
+        <option value="india">India</option>
+        <option value="vietnam">Vietnam</option>
+        <option value="singapore">Singapore</option>
+      </select>
+    </div>
+
+    <br>
+
+    <div>
+      <input type="checkbox" id="remoteWork" v-model="formValues.remoteWork" true-value="yes" false-value="no">
+      <label for="remoteWork">Open to Remote Work?</label>
+    </div>
+
+    <br>
+
+    <div>
+      <label>Skill Set</label>
+      <input type="checkbox" id="html" value="html" v-model="formValues.skillSet" />
+      <label for="html">HTML</label>
+      <input type="checkbox" id="css" value="css" v-model="formValues.skillSet"  />
+      <label for="css">CSS</label>
+      <input type="checkbox" id="javascript" value="javascript" v-model="formValues.skillSet" />
+      <label for="javascript">JavaScript</label>
+    </div>
+
+    <br>
+
+    <div>
+      <label>Years of Experience</label>
+
+        <input type="radio" id="0-2" value="0-2" v-model="formValues.yearsOfExperience"/>
+        <label for="0-2">0-2</label>
+
+        <input type="radio" id="3-5" value="3-5" v-model="formValues.yearsOfExperience"/>
+        <label for="3-5">3-5</label>
+        
+        <input type="radio" id="5-10" value="5-10" v-model="formValues.yearsOfExperience"/>
+        <label for="5-10">5-10</label>
+        
+        <input type="radio" id=">10" value=">10" v-model="formValues.yearsOfExperience"/>
+        <label for=">10">>10</label>
+        
+    </div>
+
+    <div>
+      <button>Submit</button>
+    </div>
+  </form>
 </template>
 
 <style>
@@ -61,28 +116,46 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }
-
 .underline {
   text-decoration: underline;
 }
-
 .promoted {
   font-style: italic;
 }
-
-.sold-out {
-  color: red;
-}
-
-.sold-out {
-  color: red;
-}
-
 .new {
-  color: green;
+  color: olivedrab;
+}
+.sold-out {
+  color: red;
+}
+label {
+  font-weight: bold;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+input + label {
+  font-weight: bold;
+  display: inline-flex;
+  margin-right: 20px;
+}
+
+input[type='text'],
+textarea,
+select {
+  display: block;
+  width: 400px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 </style>
