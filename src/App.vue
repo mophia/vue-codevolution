@@ -10,7 +10,8 @@ export default {
         jobLocation: [],
         remoteWork: 'no',
         skillSet: [],
-        yearsOfExperience: ''
+        yearsOfExperience: '',
+        age: null,
       }
     };
   },
@@ -34,7 +35,7 @@ export default {
   <form @submit.prevent="submitForm">
     <div>
       <label for="name">Name</label>
-      <input type="text" id="name" v-model="formValues.name">
+      <input type="text" id="name" v-model.lazy.trim="formValues.name">
     </div>
 
     <br>
@@ -103,6 +104,11 @@ export default {
         <input type="radio" id=">10" value=">10" v-model="formValues.yearsOfExperience"/>
         <label for=">10">>10</label>
         
+    </div>
+
+    <div>
+      <label for="age">Age</label>
+      <input type="number" id="age" v-model.number="formValues.age">
     </div>
 
     <div>
