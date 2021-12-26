@@ -3,31 +3,57 @@ export default {
   name: 'App',
   data() {
     return {
-      firstName: 'Sooia',
-      lastName: 'Miffy',
-      items: [
-        {id:1, title: 'TV', price: 100},
-        {id:2, title: 'Phone', price: 200},
-        {id:3, title: 'Laptop', price: 300}
-      ]
+      volume: 0,
+      movie: '',
+      movieInfo: {
+        title: '',
+        actor: ''
+      },
+      movieList: ['Bfy', 'Sooia']
     };
   },
-  methods: {
-  },
-  computed: {
-    fullName(){
-      return `${this.firstName} ${this.lastName}`
+  watch: {
+    volume(newValue, oldValue) {
+      if( newValue === 16 && newValue > oldValue){
+        alert('Listening to a high volume for a long time may damage your hearing!')
+      }
+    },
+    movie: {
+      handler(newValue) {
+        console.log(`Calling API with movie name = ${newValue}`)
+      },
+      immediate: true
+    },
+    movieInfo: {
+      handler(newValue) {
+        console.log(`Calling API with movie title = ${newValue.title} and actor = ${newValue.actor}`) 
+      },
+      deep: true
+    },
+    movieList: {
+      handler(newValue) {
+        console.log(`Calling API with movie list = ${newValue}`) 
+      },
+      // deep: true
     }
   }
 };
 </script>
 
 <template>
-  <h2>Fullname - {{firstName}} {{lastName}}</h2>
-  <h2>Fullname - {{fullName}}</h2>
-  <h2>
-    Total - {{items.reduce((total, curr) => (total = total + curr.price), 0)}}
-  </h2>
+  <h2>Volume Tracker</h2>
+  <h3>Current Volume - {{ volume }}</h3>
+  <div>
+    <button @click="volume += 2">Increase</button>
+    <button @click="volume -= 2">Decrease</button>
+  </div>
+  <input type="text" v-model="movie">
+  <input type="text" v-model="movieInfo.title">
+  <input type="text" v-model="movieInfo.actor">
+  <div>
+    <button @click="movieList = movieList.concat('222')">点击</button>
+    <!-- movieList.push('111') -->
+  </div>
 </template>
 
 <style>
